@@ -26,4 +26,14 @@ public class MyArrayListTest {
               "String " + i, arrayListString.get(i));
     }
   }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void checkIndexOutOfBoundIsThrownForGreater() {
+    arrayListString.get(5);
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void checkIndexOutOfBoundIsThrownForLess() {
+    arrayListString.get(-1);
+  }
 }

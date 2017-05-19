@@ -22,7 +22,7 @@ public class MyArrayList<E> implements List<E> {
   public boolean add(E e) {
     checkArraysSize();
     // Determines the current index in a circular array
-    int index = (size + writeIndex) % arrayLength;
+    int index = getWriteIndex(size);
     array[index] = e;
     if (array[index].equals(e)) {
       size++;
@@ -42,6 +42,10 @@ public class MyArrayList<E> implements List<E> {
     array = Arrays.copyOf(array, newArrayLength);
   }
 
+  private int getWriteIndex(int index) {
+    return (index + writeIndex) % arrayLength;
+  }
+
   public void add(int index, E element) {}
 
   public boolean addAll(Collection<? extends E> c) {
@@ -52,7 +56,9 @@ public class MyArrayList<E> implements List<E> {
     return false;
   }
 
-  public void clear() {}
+  public void clear() {
+    array = new Object[20];
+  }
 
   public boolean contains(Object o) {
     return false;
@@ -66,9 +72,9 @@ public class MyArrayList<E> implements List<E> {
     return false;
   }
 
-  public E get(int index) {
-    if (index >= size) {
-      return null;
+  public E get(int index)  {
+    if (index >= size || index < 0) {
+      throw new IndexOutOfBoundsException();
     }
     int theIndex = index + writeIndex;
     return (E) array[theIndex];
@@ -83,7 +89,7 @@ public class MyArrayList<E> implements List<E> {
   }
 
   public boolean isEmpty() {
-    return true;
+    return size == 0;
   }
 
   public Iterator<E> iterator() {
