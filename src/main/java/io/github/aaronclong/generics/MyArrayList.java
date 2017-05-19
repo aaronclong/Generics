@@ -1,26 +1,44 @@
 package io.github.aaronclong.generics;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.function.UnaryOperator;
 
 /**
  * Created by aaronlong on 5/18/17.
  */
 public class MyArrayList<E> implements List<E> {
-
+  private int arrayLength;
+  private int readIndex;
+  private int writeIndex;
+  private int size;
   private Object[] array;
 
   public MyArrayList() {
     array = new Object[20];
+    arrayLength = 20;
   }
 
   public boolean add(E e) {
+    checkArraysSize();
+    // Determines the current index in a circular array
+    int index = (size + writeIndex) % arrayLength;
+    array[index] = e;
+    if (array[index].equals(e)) {
+      size++;
+      return true;
+    }
     return false;
+  }
+
+  private void checkArraysSize() {
+    if (arrayLength - size == arrayLength/3) {
+      resizeArray(arrayLength * 2);
+      arrayLength = arrayLength * 2;
+    }
+  }
+
+  private void resizeArray(int newArrayLength) {
+    array = Arrays.copyOf(array, newArrayLength);
   }
 
   public void add(int index, E element) {}
@@ -48,7 +66,11 @@ public class MyArrayList<E> implements List<E> {
   }
 
   public E get(int index) {
-    return (E) array[0];
+    if (index >= size) {
+      return null;
+    }
+    int theIndex = index + writeIndex;
+    return (E) array[theIndex];
   }
 
   public int hashCode() {
@@ -102,7 +124,7 @@ public class MyArrayList<E> implements List<E> {
   }
 
   public int size() {
-    return 0;
+    return size;
   }
 
   public void sort(Comparator<? super E> c) {}
