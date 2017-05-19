@@ -34,13 +34,13 @@ public class MyArrayList<E> implements List<E> {
   private void checkArraysSize() {
     if (arrayLength - size == arrayLength/3) {
       resizeArray(arrayLength * 2);
-      arrayLength = arrayLength * 2;
+      //arrayLength = arrayLength * 2;
     }
   }
 
   private void resizeArray(int newArrayLength) {
     array = Arrays.copyOf(array, newArrayLength);
-    size = newArrayLength;
+    arrayLength = newArrayLength;
   }
 
   private int getWriteIndex(int index) {
