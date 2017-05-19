@@ -8,7 +8,7 @@ import java.util.function.UnaryOperator;
  */
 public class MyArrayList<E> implements List<E> {
   private int arrayLength;
-  private int readIndex;
+  //private int readIndex;
   private int writeIndex;
   private int size;
   private Object[] array;
@@ -16,6 +16,7 @@ public class MyArrayList<E> implements List<E> {
   public MyArrayList() {
     array = new Object[20];
     arrayLength = 20;
+    writeIndex = 0;
   }
 
   public boolean add(E e) {
