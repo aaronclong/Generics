@@ -22,9 +22,17 @@ public class MyArrayListTest {
       arrayListString.add("String " + i);
     }
     for (int i =0; i < 25; i++) {
+      LoggerForTest.LOGGER.info("The Index: " + i);
+      LoggerForTest.LOGGER.info("The element: " + arrayListString.get(i));
       assertEquals("Checking the correct addition and retrieval of items",
               "String " + i, arrayListString.get(i));
     }
+  }
+
+  @Test
+  public void testAddElementAtIndex() {
+    arrayListString.add(10, "What's up");
+    assertEquals("Check element addition at particular index", "What's up", arrayListString.get(10));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)

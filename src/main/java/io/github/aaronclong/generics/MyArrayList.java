@@ -40,13 +40,21 @@ public class MyArrayList<E> implements List<E> {
 
   private void resizeArray(int newArrayLength) {
     array = Arrays.copyOf(array, newArrayLength);
+    size = newArrayLength;
   }
 
   private int getWriteIndex(int index) {
     return (index + writeIndex) % arrayLength;
   }
 
-  public void add(int index, E element) {}
+  public void add(int index, E element) {
+    checkArraysSize();
+    if (index > arrayLength) {
+      resizeArray(index + 1);
+    }
+    int theIndex = getWriteIndex(index);
+    array[theIndex] = element;
+  }
 
   public boolean addAll(Collection<? extends E> c) {
     return false;
@@ -72,7 +80,7 @@ public class MyArrayList<E> implements List<E> {
     return false;
   }
 
-  public E get(int index)  {
+  public E get(int index) {
     if (index >= size || index < 0) {
       throw new IndexOutOfBoundsException();
     }
